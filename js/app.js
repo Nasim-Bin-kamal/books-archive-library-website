@@ -44,7 +44,7 @@ const loadBooksData = () => {
 
 // display books data
 const displayBooks = booksData => {
-    // console.log(booksData);
+    console.log(booksData);
     const { docs, numFound } = booksData;
     const totalBooks = document.getElementById('total-books');
     totalBooks.textContent = '';
@@ -56,15 +56,13 @@ const displayBooks = booksData => {
     `;
 
     const requiredBooks = docs.slice(0, 8);
-    console.log(requiredBooks);
     const booksContainer = document.getElementById('display-books');
     booksContainer.textContent = '';
     requiredBooks.forEach(book => {
-        console.log(book);
         const booksDiv = document.createElement('div');
         booksDiv.classList.add('col');
         booksDiv.innerHTML = `
-    <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top" alt="Book Cover Image">
+    <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top w-75" alt="Book Cover Image">
     <div class="card-body">
         <h5 class="card-title fw-bold">Book Name: ${book?.title ?? ''}</h5>
         <p><span class="fw-bold">Author Name:</span> ${book?.author_name ?? ''}</p>
