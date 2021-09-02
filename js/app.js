@@ -19,7 +19,7 @@ const loadBooksData = () => {
     </div>
     `;
 
-    // check the input value 
+    // check the input value is empty or not
     if (searchValue === '') {
         booksContainer.textContent = '';
         totalBooks.textContent = '';
@@ -44,6 +44,7 @@ const loadBooksData = () => {
 const displayBooks = booksData => {
     const { docs, numFound } = booksData;
     const foundData = numFound;
+    //check the data is valid or not
     if (foundData === 0) {
         booksContainer.textContent = '';
         totalBooks.textContent = '';
