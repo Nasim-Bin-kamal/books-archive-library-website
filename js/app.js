@@ -44,7 +44,7 @@ const loadBooksData = () => {
 const displayBooks = booksData => {
     const { docs, numFound } = booksData;
     const foundData = numFound;
-    //check the data is valid or not
+    //check if books found or not
     if (foundData === 0) {
         booksContainer.textContent = '';
         totalBooks.textContent = '';
