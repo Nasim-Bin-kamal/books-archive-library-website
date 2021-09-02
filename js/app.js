@@ -21,8 +21,8 @@ const loadBooksData = () => {
 
     // check the input value 
     if (searchValue === '') {
-        booksContainer.innerHTML = '';
-        totalBooks.innerHTML = '';
+        booksContainer.textContent = '';
+        totalBooks.textContent = '';
         totalBooks.innerHTML = `
         <div class="alert-position alert alert-warning alert-dismissible fade show w-75 mx-auto  mt-5" role="alert">
             <h3 class="text-danger">Please Enter a Value First!</h3>
@@ -37,42 +37,54 @@ const loadBooksData = () => {
             .then(data => displayBooks(data));
     }
 
-
-
-
 }
+
 
 // display books data
 const displayBooks = booksData => {
-    console.log(booksData);
     const { docs, numFound } = booksData;
-    const totalBooks = document.getElementById('total-books');
-    totalBooks.textContent = '';
-    totalBooks.innerHTML = `
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <h5 class="text-center">Found total ${numFound} books.</h5>
+    const foundData = numFound;
+    if (foundData === 0) {
+        booksContainer.textContent = '';
+        totalBooks.textContent = '';
+        totalBooks.innerHTML = `
+        <div class="alert-position alert alert-warning alert-dismissible fade show w-75 mx-auto  mt-5" role="alert">
+            <h3 class="text-danger">NO RESULT FOUND!</h3>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    `;
+       </div>
+            `;
 
-    const requiredBooks = docs.slice(0, 8);
-    const booksContainer = document.getElementById('display-books');
-    booksContainer.textContent = '';
-    requiredBooks.forEach(book => {
-        const booksDiv = document.createElement('div');
-        booksDiv.classList.add('col');
-        booksDiv.innerHTML = `
-    <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top w-75" alt="Book Cover Image">
-    <div class="card-body">
-        <h5 class="card-title fw-bold">Book Name: ${book?.title ?? ''}</h5>
-        <p><span class="fw-bold">Author Name:</span> ${book?.author_name ?? ''}</p>
-         <P><span class="fw-bold">Publishers:</span> ${book?.publisher ?? ''}</P>
-        <p><span class="fw-bold">First Published:</span> ${book?.first_publish_year ?? ''}</p>
+    }
+    else {
+        // total books display data
+        totalBooks.textContent = '';
+        totalBooks.innerHTML = `
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <h5 class="text-center">Found total ${numFound} books.</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </div>
-    `;
-        booksContainer.appendChild(booksDiv);
+        `;
 
-    });
+        const requiredBooks = docs.slice(0, 30);
+
+        // set each book information
+        booksContainer.textContent = '';
+        requiredBooks.forEach(book => {
+            const booksDiv = document.createElement('div');
+            booksDiv.classList.add('col');
+            booksDiv.innerHTML = `
+        <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top w-75 p-3" alt="Book Cover Image">
+        <div class="card-body">
+            <h5 class="card-title fw-bold">Book Name: ${book?.title ?? ''}</h5>
+            <p><span class="fw-bold">Author Name:</span> ${book?.author_name ?? ''}</p>
+             <P><span class="fw-bold">Publishers:</span> ${book?.publisher ?? ''}</P>
+            <p><span class="fw-bold">First Published:</span> ${book?.first_publish_year ?? ''}</p>
+            </div>
+        </div>
+        `;
+            booksContainer.appendChild(booksDiv);
+
+        });
+    }
 
 }
